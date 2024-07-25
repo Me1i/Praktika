@@ -19,7 +19,7 @@
                       <li><a href="https://www.instagram.com"><img src="{{asset('assets/images/instagram-icon.png')}}"></a></li>
                    </ul>
                 </div>
-                <div class="read_bt"><a href="#">Read More</a></div>
+               
              </div>
           </div>
           <div class="col-lg-4 col-sm-12">

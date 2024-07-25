@@ -6,7 +6,13 @@
     use App\Http\Controllers\Admin\AdminController;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\Admin\ChangePasswordController;
-    use App\Http\Controllers\ContactController;
+    use App\Http\Controllers\ContactController;// routes/web.php
+    use App\Http\Controllers\Auth\LoginController;
+    use App\Http\Controllers\NewsletterController;
+    use Barryvdh\DomPDF\Facade as PDF;
+    
+    
+    
     
 
 
@@ -38,6 +44,10 @@
     Route::get('/contact', function () {
         return view('blog.contact');
     })->name('contact');
+
+
+    Route::get('/todos/pdf', [TodoController::class, 'downloadPdf'])->name('todos.pdf');
+
     
     Route::get('/todos', [TodoController::class, 'index'])->name('todos.index');
    
@@ -47,7 +57,7 @@
     Route::post('todos/toggleComplete', [TodoController::class, 'toggleComplete'])->name('todos.toggleComplete');
 
     Route::get('admin/change-password', [ChangePasswordController::class, 'showChangePasswordForm'])->name('blog.admin.passwords.change');
-    Route::post('admin/change-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');         
+    Route::post('admin/change-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');             
 
 
     Route::get('/CheckAdmin', function (){})->middleware('CheckAdmin')->name('admin.redirect');
@@ -56,11 +66,25 @@
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    Route::middleware('guest')->group(function () {
+        Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('/login', [LoginController::class, 'login']);
+    });
+    
+    Route::middleware('auth')->group(function () {
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
+    });
+
 
    
 
     Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
     Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+   
+    
+    Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+
 
         
 

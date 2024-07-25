@@ -18,6 +18,18 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'aliases' => [
+    // Other aliases...
+
+    'PDF' => Barryvdh\DomPDF\Facade::class,
+    ],
+
+    'providers' => [
+    // Other providers...
+
+    Barryvdh\DomPDF\ServiceProvider::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

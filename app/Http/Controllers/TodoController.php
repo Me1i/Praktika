@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Todo;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\pdf as PDF;
 
 class TodoController extends Controller
 {
@@ -12,6 +13,14 @@ class TodoController extends Controller
         // Fetch all todos, ordered by creation date in descending order
         $todos = Todo::orderBy('created_at', 'desc')->paginate(7);;
         return view('blog.admin.index', ['todos' => $todos]);
+    }
+
+     public function downloadPdf()
+    {
+        $todos = Todo::all();
+        $pdf = PDF::loadView('todos.pdf', compact('todos'));
+
+        return $pdf->download('todos.pdf');
     }
 
     public function store(Request $request)

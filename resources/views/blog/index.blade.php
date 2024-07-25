@@ -10,12 +10,12 @@
             <div class="carousel-item active">
                <div class="image_main">
                   <div class="container">
-                     <img src="{{asset('assets/images/img-1.png')}}" class="image_1">
+                     <img src="{{asset('assets/images/img-3.png')}}" class="image_1">
                      <div class="contact_bt"><a href="{{route('contact.show')}}">Contact Us</a></div>
                   </div>
                </div>
             </div>
-            <div class="carousel-item">
+            {{-- <div class="carousel-item">
                <div class="image_main">
                   <div class="container">
                      <img src="{{asset('assets/images/img-1.png')}}" class="image_1">
@@ -24,13 +24,13 @@
                </div>
             </div>
             <div class="carousel-item">
-               <div class="image_main">
+               <div class="image_main"> 
                   <div class="container">
                      <img src="{{asset('assets/images/img-1.png')}}" class="image_1">
                      <div class="contact_bt"><a href="{{route('contact.show')}}">Contact Us</a></div>
                   </div>
                </div>
-            </div>
+            </div> --}}
          </div>
          <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
          <i class="fa fa-angle-left"></i>
@@ -48,17 +48,18 @@
 <div class="touch_setion">
    <div class="box_main">
       <div class="image_2 ">
-         <h4 class="who_text">Who am i</h4>
+         <a href="{{route('contact.show')}}"><h4 class="who_text">Who am I</h4></a>
       </div>
    </div>
    <div class="box_main">
       <div class="image_3">
-         <h4 class="who_text">Get In Touch</h4>
+         
+         <a href="{{route('contact.show')}}"><h4 class="who_text">Get In Touch</h4></a>
       </div>
    </div>
    <div class="box_main">
       <div class="image_4">
-         <h4 class="who_text">Facebook</h4>
+         <a href="https://facebook.com"><h4 class="who_text">Facebook</h4></a>
       </div>
    </div>
 </div>

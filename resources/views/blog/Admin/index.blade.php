@@ -1,15 +1,14 @@
 <head>
   <style>
     /* Custom CSS for pagination */
-    .paginatio {
+     .pagination {
         display: flex;
         justify-content: center;
         margin-top: 20px;
-    }
-    .paginatio {
+        size: 10px;
         padding: 2px 6px;
         font-size: 12px;
-            margin: 0 2px;
+        margin: 0 2px;
     }
 </style>
 
@@ -573,38 +572,68 @@
             </div>
         </div>
     </div>
-      <form action="{{ route('todos.store') }}" method="POST">
-      @csrf           
+    <form action="{{ route('todos.store') }}" method="POST">
+      @csrf
       <div style="background-color: transparent" class="form-group">
           <input style="color: aliceblue" type="text" name="title" class="form-control" placeholder="Enter todo title">
       </div>
       <button type="submit" class="btn btn-primary">Add Todo</button>
-    </form>
-    @if($todos->isNotEmpty())
-    <ul class="list-group">
-        @foreach($todos as $todo)
-        <li style="background-color: transparent; color:white;" class="list-group-item d-flex justify-content-between align-items-left">
-            <label class="form-check-label">
-              <input type="checkbox" class="form-check-input toggle-complete" data-id="{{ $todo->id }}" {{ $todo->completed ? 'checked' : '' }}>
-                <span class="{{ $todo->completed ? 'completed' : '' }}">{{ $todo->title }}</span>
-            </label>
-            <form action="{{ route('todos.destroy', $todo->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
-        </li>
-        @endforeach
-    </ul>
-    <div class="paginatio">
-      {{ $todos->links() }}
-  </div>
-    @else
-    <p>No todos found.</p>
-    @endif
+  </form>
   
+  @if($todos->isNotEmpty())
+      <ul class="list-group">
+          @foreach($todos as $todo)
+              <li style="background-color: transparent; color:white;" class="list-group-item d-flex justify-content-between align-items-left">
+                  <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input toggle-complete" data-id="{{ $todo->id }}" {{ $todo->completed ? 'checked' : '' }}>
+                      <span class="{{ $todo->completed ? 'completed' : '' }}">{{ $todo->title }}</span>
+                  </label>
+                  <form action="{{ route('todos.destroy', $todo->id) }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+              </li>
+          @endforeach
+      </ul>
+  
+      <!-- Pagination -->
+      <nav aria-label="Page navigation example">
+          <ul class="pagination">
+              <!-- Previous Page Link -->
+              <li class="page-item {{ $todos->onFirstPage() ? 'disabled' : '' }}">
+                  <a class="page-link" href="{{ $todos->previousPageUrl() }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                  </a>
+              </li>
+  
+              <!-- Pagination Elements -->
+              @foreach ($todos->getUrlRange(1, $todos->lastPage()) as $page => $url)
+                  <li class="page-item {{ $page == $todos->currentPage() ? 'active' : '' }}">
+                      <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                  </li>
+              @endforeach
+  
+              <!-- Next Page Link -->
+              <li class="page-item {{ !$todos->hasMorePages() ? 'disabled' : '' }}">
+                  <a class="page-link" href="{{ $todos->nextPageUrl() }}" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                  </a>
+              </li>
+          </ul>
+      </nav>
+  
+      <!-- Download PDF Button -->
+      <a href="{{ route('todos.pdf') }}" class="btn btn-secondary">Download PDF</a>
+  
+  @else
+      <p>No todos found.</p>
+  @endif
+    
       </div>
-    </div>
+    </div> 
   </div>
   <div class="row">
     <div class="col-12">
